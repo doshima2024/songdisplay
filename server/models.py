@@ -1,4 +1,5 @@
 from server.app import db
+from flask import jsonify
 
 class Song(db.Model):
 
@@ -7,12 +8,15 @@ class Song(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     artist = db.Column(db.String, nullable=False)
-    url = db.Column(db.Sring, nullable=False)
+    url = db.Column(db.String, nullable=False)
 
     ratings = db.relationship("Rating", back_populates="song")
 
     def __repr__(self): 
         return f'Song: {self.name} is by {self.artist}'
+    
+    def to_dict(self):
+        return {"id": self.id, "name": self.name, "artist": self.artist, "url": self.url}
 
 class Rating(db.Model):
 
@@ -26,3 +30,6 @@ class Rating(db.Model):
     
     def __repr__(self):
         return f'Song with ID: {self.song_id} has a rating of {self.rating}'
+    
+    def to_dict(self):
+        return {"id": self.id, "rating": self.rating, "song_id": self.song_id}
