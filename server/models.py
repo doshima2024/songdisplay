@@ -10,7 +10,8 @@ class Song(db.Model):
 
     ratings = db.relationship("Rating", back_populates="song")
 
-
+    def __repr__(self): 
+        return f'Song: {self.name} is by {self.artist}'
 
 class Rating(db.Model):
 
@@ -18,7 +19,9 @@ class Rating(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     rating = db.Column(db.Integer, nullable=False)
-    song_id = db.Column(db.Integer, db.ForeignKey("songs.id"))
+    song_id = db.Column(db.Integer, db.ForeignKey("songs.id"), nullable=False)
 
     song = db.relationship("Song", back_populates="ratings")
     
+    def __repr__(self):
+        return f'Song with ID: {self.song_id} has a rating of {self.rating}'
