@@ -7,6 +7,7 @@ class Song(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     artist = db.Column(db.String, nullable=False)
+    url = db.Column(db.Sring, nullable=False)
 
     ratings = db.relationship("Rating", back_populates="song")
 
