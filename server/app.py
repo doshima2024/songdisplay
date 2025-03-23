@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
@@ -19,7 +19,23 @@ def register_models():
 
 register_models()
 
+#Get and return all songs from the backend
+
 @app.get("/songs")
 def get_songs():
     songs = Song.query.all()
     return jsonify([song.to_dict() for song in songs])
+
+#Add a new song to the database
+
+@app.post("/song")
+def add_song():
+    data = request.json
+    try:
+        new_song = (Song(name=data["name"], artist=data["artist"], url=data["url"]))
+        #Could write with dictionary unpacking as: new_song = Song(**data)
+        db.session.add(new_song)
+        db.session.commit()
+        return jsonify(new_song.to_dict())
+    except Exception as exception:
+        return jsonify(str(exception))
