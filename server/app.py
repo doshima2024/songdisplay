@@ -19,12 +19,7 @@ def register_models():
 
 register_models()
 
-@app.get("/song")
-def get_song():
-    song = Song.query.first()
-    return jsonify(song.to_dict())
-
-@app.get("/rating")
-def get_rating():
-    rating = Rating.query.first()
-    return jsonify(rating.to_dict())
+@app.get("/songs")
+def get_songs():
+    songs = Song.query.all()
+    return jsonify([song.to_dict() for song in songs])
