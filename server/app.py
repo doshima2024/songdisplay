@@ -51,3 +51,19 @@ def delete_song(id):
         return jsonify({})
     except Exception as exception:
         return jsonify(str(exception))
+    
+# Update a song in Database
+
+#We want to take the id of the song to updated, get the user's input for the song change, get the 
+#song to be updated, and then update it (?)
+
+@app.patch("/songs/<int:id>")
+def update_song(id):
+    data = request.json
+    song = Song.query.get(id)
+    for key in data:
+        #setattr(instance you want to update, attribute to be updated, new value)
+        setattr(song, key, data[key])
+    db.session.commit()
+    return jsonify(song.to_dict())
+
