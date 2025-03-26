@@ -67,3 +67,10 @@ def update_song(id):
     db.session.commit()
     return jsonify(song.to_dict())
 
+@app.get("/ratings")
+def get_ratings():
+    ratings = Rating.query.all()
+    if ratings:
+        return jsonify([rating.to_dict() for rating in ratings])
+    else:
+        return jsonify({"error": "no ratings found in database"})
