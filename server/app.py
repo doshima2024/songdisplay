@@ -78,3 +78,18 @@ def get_ratings():
     else:
         return jsonify({"error": "no ratings found in database"})
     
+@app.post("/ratings/<int:song_id>")
+def create_a_rating(song_id):
+    data = request.json
+    try:
+        new_rating = Rating(rating=data["rating"], song_id=song_id)
+        db.session.add(new_rating)
+        db.session.commit()
+        return jsonify(new_rating.to_dict())
+    except Exception as exception:
+        return jsonify({"error": str(exception)})
+
+
+
+
+    
