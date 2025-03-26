@@ -24,7 +24,10 @@ register_models()
 @app.get("/songs")
 def get_songs():
     songs = Song.query.all()
-    return jsonify([song.to_dict() for song in songs])
+    if songs:
+        return jsonify([song.to_dict() for song in songs])
+    else:
+        return jsonify({"error": "no songs found in database"})
 
 #Add a new song to the database (add more robust error handling, status codes)
 
@@ -74,3 +77,4 @@ def get_ratings():
         return jsonify([rating.to_dict() for rating in ratings])
     else:
         return jsonify({"error": "no ratings found in database"})
+    
