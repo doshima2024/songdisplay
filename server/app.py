@@ -89,7 +89,18 @@ def create_a_rating(song_id):
     except Exception as exception:
         return jsonify({"error": str(exception)})
 
-
+@app.delete("/ratings/<int:id>")
+def delete_rating(id):
+    rating = Rating.query.get(id)
+    if rating:
+        try:
+            db.session.delete(rating)
+            db.session.commit()
+            return ({})
+        except:
+            return jsonify({"error": "error deleting rating"})
+    else:
+        return jsonify({"error": "no rating found with that id"})
 
 
     
