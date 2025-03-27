@@ -25,9 +25,9 @@ register_models()
 def get_songs():
     songs = Song.query.all()
     if songs:
-        return jsonify([song.to_dict() for song in songs])
+        return jsonify([song.to_dict() for song in songs]), 200 
     else:
-        return jsonify({"error": "no songs found in database"})
+        return jsonify({"error": "no songs found in database"}), 404
 
 #Add a new song to the database (add more robust error handling, status codes)
 
@@ -39,9 +39,9 @@ def add_song():
         #Could write with dictionary unpacking as: new_song = Song(**data)
         db.session.add(new_song)
         db.session.commit()
-        return jsonify(new_song.to_dict())
+        return jsonify(new_song.to_dict()), 201
     except Exception as exception:
-        return jsonify(str(exception))
+        return jsonify(str(exception)), 500
     
 # Delete a song from the database by ID (add more robust error handling, status codes)
 
