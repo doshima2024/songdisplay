@@ -96,11 +96,11 @@ def delete_rating(id):
         try:
             db.session.delete(rating)
             db.session.commit()
-            return ({})
-        except:
-            return jsonify({"error": "error deleting rating"})
+            return ({}), 204
+        except Exception as error:
+            return jsonify({"error": "error deleting rating"}), 500
     else:
-        return jsonify({"error": "no rating found with that id"})
+        return jsonify({"error": "no rating found with that id"}), 404
     
 @app.patch("/ratings/<int:id>")
 def update_a_rating(id):
