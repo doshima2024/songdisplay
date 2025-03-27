@@ -48,12 +48,14 @@ def add_song():
 @app.delete("/songs/<int:id>")
 def delete_song(id):
     song = Song.query.get(id)
+    if not song:
+        return jsonify({"error": "song with that ID not found in database"}), 404
     try:
         db.session.delete(song)
         db.session.commit()
-        return jsonify({})
+        return jsonify({}), 204
     except Exception as exception:
-        return jsonify(str(exception))
+        return jsonify(str(exception)), 500
     
 # Update a song in Database
 
