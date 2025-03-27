@@ -66,11 +66,16 @@ def delete_song(id):
 def update_song(id):
     data = request.json
     song = Song.query.get(id)
-    for key in data:
+    if not song:
+        return jsonify({"error": "no song with that ID found in the database"}), 404
+    try:
+        for key in data:
         #setattr(instance you want to update, attribute to be updated, new value)
-        setattr(song, key, data[key])
-    db.session.commit()
-    return jsonify(song.to_dict())
+            setattr(song, key, data[key])
+        db.session.commit()
+        return jsonify(song.to_dict()), 200
+    except Exception as exception:
+        return({"error": str(exception)}), 500
 
 @app.get("/ratings")
 def get_ratings():
