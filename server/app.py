@@ -25,9 +25,9 @@ register_models()
 def get_songs():
     songs = Song.query.all()
     if songs:
-        return jsonify([song.to_dict() for song in songs])
+        return jsonify([song.to_dict() for song in songs]), 200 
     else:
-        return jsonify({"error": "no songs found in database"})
+        return jsonify({"error": "no songs found in database"}), 404
 
 #Add a new song to the database (add more robust error handling, status codes)
 
@@ -39,21 +39,23 @@ def add_song():
         #Could write with dictionary unpacking as: new_song = Song(**data)
         db.session.add(new_song)
         db.session.commit()
-        return jsonify(new_song.to_dict())
+        return jsonify(new_song.to_dict()), 201
     except Exception as exception:
-        return jsonify(str(exception))
+        return jsonify(str(exception)), 500
     
 # Delete a song from the database by ID (add more robust error handling, status codes)
 
 @app.delete("/songs/<int:id>")
 def delete_song(id):
     song = Song.query.get(id)
+    if not song:
+        return jsonify({"error": "song with that ID not found in database"}), 404
     try:
         db.session.delete(song)
         db.session.commit()
-        return jsonify({})
+        return jsonify({}), 204
     except Exception as exception:
-        return jsonify(str(exception))
+        return jsonify(str(exception)), 500
     
 # Update a song in Database
 
@@ -64,11 +66,16 @@ def delete_song(id):
 def update_song(id):
     data = request.json
     song = Song.query.get(id)
-    for key in data:
+    if not song:
+        return jsonify({"error": "no song with that ID found in the database"}), 404
+    try:
+        for key in data:
         #setattr(instance you want to update, attribute to be updated, new value)
-        setattr(song, key, data[key])
-    db.session.commit()
-    return jsonify(song.to_dict())
+            setattr(song, key, data[key])
+        db.session.commit()
+        return jsonify(song.to_dict()), 200
+    except Exception as exception:
+        return({"error": str(exception)}), 500
 
 @app.get("/ratings")
 def get_ratings():
@@ -96,24 +103,25 @@ def delete_rating(id):
         try:
             db.session.delete(rating)
             db.session.commit()
-            return ({})
-        except:
-            return jsonify({"error": "error deleting rating"})
+            return ({}), 204
+        except Exception as error:
+            return jsonify({"error": "error deleting rating"}), 500
     else:
-        return jsonify({"error": "no rating found with that id"})
+        return jsonify({"error": "no rating found with that id"}), 404
     
 @app.patch("/ratings/<int:id>")
 def update_a_rating(id):
     existing_rating = Rating.query.get(id)
-    if id:
-        try:
-            data = request.json
-            for key in data:
-                setattr(existing_rating, key, data[key])
-                db.session.commit()
-                return jsonify(existing_rating.to_dict())
-        except: 
-            return jsonify({"error": "no rating with that ID in the database"})
+    if existing_rating is None:
+        return jsonify({"error": "No rating found with that ID"}), 404
+    try:
+        data = request.json
+        for key in data:
+            setattr(existing_rating, key, data[key])
+        db.session.commit()
+        return jsonify(existing_rating.to_dict()), 200
+    except Exception as exception: 
+        return jsonify({"error": "failed to update the rating"}), 500
     
     
 
