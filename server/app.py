@@ -101,6 +101,20 @@ def delete_rating(id):
             return jsonify({"error": "error deleting rating"})
     else:
         return jsonify({"error": "no rating found with that id"})
-
+    
+@app.patch("/ratings/<int:id>")
+def update_a_rating(id):
+    existing_rating = Rating.query.get(id)
+    if id:
+        try:
+            data = request.json
+            for key in data:
+                setattr(existing_rating, key, data[key])
+                db.session.commit()
+                return jsonify(existing_rating.to_dict())
+        except: 
+            return jsonify({"error": "no rating with that ID in the database"})
+    
+    
 
     
