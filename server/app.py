@@ -1,10 +1,11 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-
+from flask_cors import CORS
 
 
 app = Flask(__name__)
+CORS(app)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///main.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
@@ -81,9 +82,9 @@ def update_song(id):
 def get_ratings():
     ratings = Rating.query.all()
     if ratings:
-        return jsonify([rating.to_dict() for rating in ratings])
+        return jsonify([rating.to_dict() for rating in ratings]), 200
     else:
-        return jsonify({"error": "no ratings found in database"})
+        return jsonify({"error": "no ratings found in database"}), 404
     
 @app.post("/ratings/<int:song_id>")
 def create_a_rating(song_id):
@@ -92,9 +93,9 @@ def create_a_rating(song_id):
         new_rating = Rating(rating=data["rating"], song_id=song_id)
         db.session.add(new_rating)
         db.session.commit()
-        return jsonify(new_rating.to_dict())
+        return jsonify(new_rating.to_dict()), 201
     except Exception as exception:
-        return jsonify({"error": str(exception)})
+        return jsonify({"error": str(exception)}), 500
 
 @app.delete("/ratings/<int:id>")
 def delete_rating(id):
