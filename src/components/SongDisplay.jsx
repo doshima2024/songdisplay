@@ -1,14 +1,14 @@
 import {useState, useEffect} from "react";
 
 function SongDisplay() {
-    const [songs, setsongs] = useState([])
-    const [ratings, setratings] = useState([])
+    const [songs, setSongs] = useState([])
+    const [ratings, setRatings] = useState([])
     const [error, setError] = useState("")
 
     useEffect(() => {
         fetch("http://127.0.0.1:5000/songs")
         .then(response => response.json())
-        .then(data => setsongs(data))
+        .then(data => setSongs(data))
         .catch(error => setError(error.message))
     }, [])  
    
