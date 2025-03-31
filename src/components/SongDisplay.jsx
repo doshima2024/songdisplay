@@ -1,4 +1,5 @@
 import {useState, useEffect} from "react";
+import AddSong from "./AddSong"
 
 function SongDisplay() {
     const [songs, setSongs] = useState([])
@@ -24,6 +25,7 @@ function SongDisplay() {
     return(
         <div>
             <h1>Songs And Ratings</h1>
+
                 {error && <p>Error: {error}</p>}
                 
                 {songs.map((song) => {
@@ -36,7 +38,7 @@ function SongDisplay() {
                     <p key={rating.id}>Song Rating: {rating.rating}</p>)}
                 </div>)
             })}
-            
+            <AddSong setSongs={setSongs} />
         </div>
     )
 }
