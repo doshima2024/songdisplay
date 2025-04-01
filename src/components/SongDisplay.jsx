@@ -20,7 +20,11 @@ function SongDisplay() {
         .catch (error => setError(error.message))
    }, [])
    
-   
+   function handleDelete(id) {
+    fetch(`http://127.0.0.1:5000/songs/${id}`, {"method": "DELETE"})
+    .then(response => response.ok && setSongs(songs.filter(song => song.id !== id)))
+    .catch(error => setError(error.message))
+   }
 
     return(
         <div>
@@ -34,6 +38,8 @@ function SongDisplay() {
                     <div key={song.id}>
                     <h2>{song.name} by {song.artist}</h2>
                     <iframe src={`https://open.spotify.com/embed/track/${song.url.split("/").pop()}`} width="300" height="80"></iframe>
+                    <br></br>
+                    <button onClick={() => handleDelete(song.id)}>Delete Song</button>
                     {songRatings.map((rating) =>
                     <p key={rating.id}>Song Rating: {rating.rating}</p>)}
                 </div>)
