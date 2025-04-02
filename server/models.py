@@ -10,7 +10,7 @@ class Song(db.Model):
     artist = db.Column(db.String, nullable=False)
     url = db.Column(db.String, nullable=False)
 
-    ratings = db.relationship("Rating", back_populates="song")
+    ratings = db.relationship("Rating", back_populates="song", cascade="all, delete")
 
     def __repr__(self): 
         return f'Song: {self.name} is by {self.artist}'
