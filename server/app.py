@@ -81,10 +81,8 @@ def update_song(id):
 @app.get("/ratings")
 def get_ratings():
     ratings = Rating.query.all()
-    if ratings:
-        return jsonify([rating.to_dict() for rating in ratings]), 200
-    else:
-        return jsonify({"error": "no ratings found in database"}), 404
+    return jsonify([rating.to_dict() for rating in ratings]), 200
+    
     
 @app.post("/ratings/<int:song_id>")
 def create_a_rating(song_id):

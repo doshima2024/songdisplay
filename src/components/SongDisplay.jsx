@@ -5,6 +5,7 @@ function SongDisplay() {
     const [songs, setSongs] = useState([])
     const [ratings, setRatings] = useState([])
     const [error, setError] = useState("")
+    const [newRating, setNewRating] = useState({}) //new line here
 
     useEffect(() => {
         fetch("http://127.0.0.1:5000/songs")
@@ -26,6 +27,26 @@ function SongDisplay() {
     .catch(error => setError(error.message))
    }
 
+   //new function below for handling the POST of a new rating and tying it to song ID:
+
+   function handlePostRating(event, id) {
+    
+    event.preventDefault();
+
+    fetch(`http://127.0.0.1:5000/ratings/${id}`, {"method": "POST",
+        headers: {"Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify({
+            "rating": newRating[id]
+        })})
+        .then(response => response.json())
+        .then(data => {setRatings(prevRatings => [...prevRatings, data])
+            setNewRating("")
+        })
+        .catch(error => setError(error.message))
+   }
+
     return(
         <div>
             <h1>Songs And Ratings</h1>
@@ -42,6 +63,11 @@ function SongDisplay() {
                     <button onClick={() => handleDelete(song.id)}>Delete Song</button>
                     {songRatings.map((rating) =>
                     <p key={rating.id}>Song Rating: {rating.rating}</p>)}
+                    <form onSubmit={(event) => handlePostRating(event, song.id)}>
+                        <label>Leave A Rating:</label>
+                        <input type="text" value={newRating[song.id] || ""} onChange={(event) => setNewRating({...newRating, [song.id]:event.target.value})}></input>
+                        <button type="submit">Submit Rating</button>
+                    </form>
                 </div>)
             })}
             <AddSong setSongs={setSongs} />
