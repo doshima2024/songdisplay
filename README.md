@@ -36,6 +36,6 @@ Open the URL provided in the second terminal to view the app.
 
 ## Acknowledgements 
 
-Special thanks to my Flatiron School instructors and my peers for their support on the learning journey that led me tobuild this project. It served as valuable practice and helped solidify my full stack skills: writing models with SQLalchemy and Python, creating backend routes with Flask, writing React components with state management and connecting the frontend and backend via fetch calls in React.
+Special thanks to my Flatiron School instructors and my peers for their support on the learning journey that led me to build this project. It served as valuable practice and helped solidify my full stack skills: writing models with SQLalchemy and Python, creating backend routes with Flask, writing React components with state management and connecting the frontend and backend via fetch calls in React.
 
 
