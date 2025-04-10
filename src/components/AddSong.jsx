@@ -34,16 +34,16 @@ function AddSong({setSongs}) {
 
 return(
     <div>
-        <h3>Add A Song To The List:</h3>
+        <h3 className="text-2xl">Add A Song To The List:</h3>
         <form onSubmit= {handleSubmit}>
             <label id="name">Song Name:</label>
-            <input type="text" value={name} onChange= {(event) => setName(event.target.value)}></input>
+            <input type="text" className="bg-white p-2 border border-gray-300 rounded w-full" value={name} onChange= {(event) => setName(event.target.value)}></input>
             <br></br>
             <label id="artist">Artist's Name:</label>
-            <input type="text" value={artist} onChange= {(event) => setArtist(event.target.value)}></input>
+            <input type="text" className="bg-white p-2 border border-gray-300 rounded w-full" value={artist} onChange= {(event) => setArtist(event.target.value)}></input>
             <br></br>
             <label id="url">Spotify URL:</label>
-            <input type="text" value={url} onChange= {(event) => setUrl(event.target.value)}></input>
+            <input type="text" className="bg-white p-2 border border-gray-300 rounded w-full" value={url} onChange= {(event) => setUrl(event.target.value)}></input>
             <br></br>
             <button type="submit">Add Song</button>
         </form>
