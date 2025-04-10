@@ -5,7 +5,7 @@ function SongDisplay() {
     const [songs, setSongs] = useState([])
     const [ratings, setRatings] = useState([])
     const [error, setError] = useState("")
-    const [newRating, setNewRating] = useState({}) //new line here
+    const [newRating, setNewRating] = useState({}) 
 
     useEffect(() => {
         fetch("http://127.0.0.1:5000/songs")
@@ -48,7 +48,8 @@ function SongDisplay() {
    }
 
     return(
-        <div>
+        <div  className="rounded bg-gray-100 text-gray-700 max-w-5xl p-50"> 
+        <div >
             <h1>Songs And Ratings</h1>
 
                 {error && <p>Error: {error}</p>}
@@ -66,11 +67,13 @@ function SongDisplay() {
                     <form onSubmit={(event) => handlePostRating(event, song.id)}>
                         <label>Leave A Rating:</label>
                         <input type="text" value={newRating[song.id] || ""} onChange={(event) => setNewRating({...newRating, [song.id]:event.target.value})}></input>
+                        <br></br>
                         <button type="submit">Submit Rating</button>
                     </form>
                 </div>)
             })}
             <AddSong setSongs={setSongs} />
+        </div>
         </div>
     )
 }
