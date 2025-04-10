@@ -1,13 +1,17 @@
 ## Song Display
 
-Song Display is a full-stack web app that displays hard-coded Spotify songs using iframes, and allows users to add ratings to songs, both stored in a SQLite database.
+Song Display is a full-stack web app that displays Spotify songs using iframes. It also allows users to add and delete songs, and add ratings to songs, all via simple, styled UI. Songs and ratings are stored on the backend in a SQLite database.
 
 ## Tech Stack
-- React
-- JavaScript
+- **Frontend** 
+- React 
+- JavaScript 
+- Vite
+- Tailwind (styling)
+- **Backend**
 - Python (Flask)
 - SQLAlchemy (ORM)
-- SQLite (Database)
+- SQLite 
 
 ## Features
 
