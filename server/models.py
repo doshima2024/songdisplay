@@ -58,3 +58,11 @@ class Rating(db.Model):
     
     def to_dict(self):
         return {"id": self.id, "rating": self.rating, "song_id": self.song_id}
+    
+    @validates("rating")
+    def validate_rating(self, key, value):
+        if not type(value) == int:
+            raise ValueError("Rating must be a number")
+        if value < 0 or value > 10:
+            raise ValueError("Rating must be between zero and ten")
+        return value
