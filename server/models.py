@@ -1,5 +1,6 @@
 from server.app import db
 from flask import jsonify
+from sqlalchemy.orm import validates
 
 class Song(db.Model):
 
@@ -17,6 +18,30 @@ class Song(db.Model):
     
     def to_dict(self):
         return {"id": self.id, "name": self.name, "artist": self.artist, "url": self.url}
+      
+    @validates("name")
+    def validate_name(self, key, value):
+        if not type(value) == str:
+            raise TypeError("song name must be a string")
+        if not value.strip():
+            raise ValueError("song name must not be empty")
+        return value
+    
+    @validates("artist")
+    def validate_artist(self, key, value):
+        if not type(value) == str:
+            raise TypeError("artist name must be a string")
+        if not value.strip():
+            raise ValueError("artist name must not be empty")
+        return value
+    
+    @validates("url")
+    def validate_url(self, key, value):
+        if not type(value) == str:
+            raise TypeError("URL must be a string")
+        if not value.strip():
+            raise ValueError("URL must not be empty")
+        return value
 
 class Rating(db.Model):
 
