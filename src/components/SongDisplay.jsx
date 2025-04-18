@@ -50,7 +50,7 @@ function SongDisplay() {
     return(
         <div  className="rounded bg-gray-100 text-gray-700 max-w-5xl p-50"> 
         <div className="space-y-10">
-            <h1>Songs And Ratings</h1>
+            <h1 className="text-3xl font-bold text-center mb-6">Songs And Ratings</h1>
 
                 {error && <p>Error: {error}</p>}
                 
