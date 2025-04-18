@@ -65,7 +65,7 @@ function SongDisplay() {
                     {songRatings.map((rating) =>
                     <p key={rating.id}>Song Rating: {rating.rating}</p>)}
                     <form onSubmit={(event) => handlePostRating(event, song.id)}>
-                        <label className="text-2xl block w-fit mx-auto">Leave A Rating:</label>
+                        <label className="text-xl block w-fit mx-auto mb-2">Leave A Rating:</label>
                         <input type="text" className="bg-white p-2 border border-gray-300 rounded w-full" value={newRating[song.id] || ""} onChange={(event) => setNewRating({...newRating, [song.id]:event.target.value})}></input>
                         <br></br>
                         <button type="submit" className="px-4 py-2 rounded shadow-md">Submit Rating</button>
