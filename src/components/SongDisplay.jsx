@@ -58,14 +58,14 @@ function SongDisplay() {
                     const songRatings = ratings.filter(rating => rating.song_id === song.id)
                 return(
                     <div key={song.id}>
-                    <h2>{song.name} by {song.artist}</h2>
+                    <h2 className="text-xl font-semibold">{song.name} by {song.artist}</h2>
                     <iframe src={`https://open.spotify.com/embed/track/${song.url.split("/").pop()}`} width="300" height="80" className="mx-auto w-full"></iframe>
                     <br></br>
                     <button onClick={() => handleDelete(song.id)} className= "px-4 py-2 rounded shadow-md">Delete Song</button>
                     {songRatings.map((rating) =>
                     <p key={rating.id}>Song Rating: {rating.rating}</p>)}
                     <form onSubmit={(event) => handlePostRating(event, song.id)}>
-                        <label className="text-2xl block w-fit mx-auto">Leave A Rating:</label>
+                        <label className="text-xl block w-fit mx-auto mb-2">Leave A Rating:</label>
                         <input type="text" className="bg-white p-2 border border-gray-300 rounded w-full" value={newRating[song.id] || ""} onChange={(event) => setNewRating({...newRating, [song.id]:event.target.value})}></input>
                         <br></br>
                         <button type="submit" className="px-4 py-2 rounded shadow-md">Submit Rating</button>
