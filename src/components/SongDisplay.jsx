@@ -48,16 +48,16 @@ function SongDisplay() {
    }
 
     return(
-        <div  className="rounded bg-gray-100 text-gray-700 max-w-5xl p-50"> 
+        <div  className="rounded bg-gray-300 text-gray-700 max-w-5xl p-50"> 
         <div className="space-y-10">
             <h1 className="text-3xl font-bold text-center mb-6">Songs And Ratings</h1>
 
-                {error && <p>Error: {error}</p>}
+                {error && <p className="text-red-500 font-semibold text-center">Error: {error}</p>}
                 
                 {songs.map((song) => {
                     const songRatings = ratings.filter(rating => rating.song_id === song.id)
                 return(
-                    <div key={song.id}>
+                    <div key={song.id} className="bg-gray-200 rounded-lg p-4 shadow-sm space-y-4">
                     <h2 className="text-xl font-semibold">{song.name} by {song.artist}</h2>
                     <iframe src={`https://open.spotify.com/embed/track/${song.url.split("/").pop()}`} width="300" height="80" className="mx-auto w-full"></iframe>
                     <br></br>
@@ -66,7 +66,7 @@ function SongDisplay() {
                     <p key={rating.id}>Song Rating: {rating.rating}</p>)}
                     <form onSubmit={(event) => handlePostRating(event, song.id)}>
                         <label className="text-xl block w-fit mx-auto mb-2">Leave A Rating:</label>
-                        <input type="text" className="bg-white p-2 border border-gray-300 rounded w-full" value={newRating[song.id] || ""} onChange={(event) => setNewRating({...newRating, [song.id]:event.target.value})}></input>
+                        <input type="text" className="bg-white p-2 border border-gray-300 rounded w-full mb-2" value={newRating[song.id] || ""} onChange={(event) => setNewRating({...newRating, [song.id]:event.target.value})}></input>
                         <br></br>
                         <button type="submit" className="px-4 py-2 rounded shadow-md">Submit Rating</button>
                     </form>

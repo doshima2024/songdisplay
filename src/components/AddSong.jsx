@@ -35,7 +35,7 @@ function AddSong({setSongs}) {
 return(
     <div>
         <h3 className="text-2xl">Add A Song To The List:</h3>
-        <form onSubmit= {handleSubmit}>
+        <form onSubmit= {handleSubmit} className="bg-gray-200 rounded-lg p-4 shadow-sm space-y-4">
             <label id="name">Song Name:</label>
             <input type="text" className="bg-white p-2 border border-gray-300 rounded w-full" value={name} onChange= {(event) => setName(event.target.value)}></input>
             <br></br>
