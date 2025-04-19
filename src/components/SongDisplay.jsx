@@ -52,7 +52,7 @@ function SongDisplay() {
         <div className="space-y-10">
             <h1 className="text-3xl font-bold text-center mb-6">Songs And Ratings</h1>
 
-                {error && <p>Error: {error}</p>}
+                {error && <p className="text-red-500 font-semibold text-center">Error: {error}</p>}
                 
                 {songs.map((song) => {
                     const songRatings = ratings.filter(rating => rating.song_id === song.id)
