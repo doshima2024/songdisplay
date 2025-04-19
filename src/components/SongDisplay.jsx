@@ -48,7 +48,7 @@ function SongDisplay() {
    }
 
     return(
-        <div  className="rounded bg-gray-100 text-gray-700 max-w-5xl p-50"> 
+        <div  className="rounded bg-gray-300 text-gray-700 max-w-5xl p-50"> 
         <div className="space-y-10">
             <h1 className="text-3xl font-bold text-center mb-6">Songs And Ratings</h1>
 
@@ -57,7 +57,7 @@ function SongDisplay() {
                 {songs.map((song) => {
                     const songRatings = ratings.filter(rating => rating.song_id === song.id)
                 return(
-                    <div key={song.id} className="bg-gray-100 rounded-lg p-4 shadow-sm space-y-4">
+                    <div key={song.id} className="bg-gray-200 rounded-lg p-4 shadow-sm space-y-4">
                     <h2 className="text-xl font-semibold">{song.name} by {song.artist}</h2>
                     <iframe src={`https://open.spotify.com/embed/track/${song.url.split("/").pop()}`} width="300" height="80" className="mx-auto w-full"></iframe>
                     <br></br>
