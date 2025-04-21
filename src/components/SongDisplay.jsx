@@ -66,7 +66,7 @@ function SongDisplay() {
                     <p key={rating.id}>Song Rating: {rating.rating}</p>)}
                     <form onSubmit={(event) => handlePostRating(event, song.id)}>
                         <label className="text-xl block w-fit mx-auto mb-2">Leave A Rating:</label>
-                        <input type="text" className="bg-white p-2 border border-gray-300 rounded w-full mb-2" value={newRating[song.id] || ""} onChange={(event) => setNewRating({...newRating, [song.id]:event.target.value})}></input>
+                        <input type="text" className="bg-white p-2 border border-gray-300 rounded w-full mb-2" value={newRating[song.id] || ""} onChange={(event) => setNewRating({...newRating, [song.id]: parseInt(event.target.value)})}></input>
                         <br></br>
                         <button type="submit" className="px-4 py-2 rounded shadow-md">Submit Rating</button>
                     </form>
