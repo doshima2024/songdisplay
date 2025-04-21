@@ -122,6 +122,6 @@ def update_a_rating(id):
     except Exception as exception: 
         return jsonify({"error": "failed to update the rating"}), 500
     
-    
-
+if __name__ == "__main__":
+    app.run(debug=True)
     
