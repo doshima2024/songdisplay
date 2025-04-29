@@ -37,13 +37,13 @@ return(
         <h3 className="text-2xl">Add A Song To The List:</h3>
         <form onSubmit= {handleSubmit} className="bg-white rounded-xl p-6 shadow-md space-y-4">
             <label id="name">Song Name:</label>
-            <input type="text" className="bg-white p-2 border border-gray-300 rounded w-full" value={name} onChange= {(event) => setName(event.target.value)}></input>
+            <input type="text" placeholder="Song Name" className="bg-white p-2 border border-gray-300 rounded w-full" value={name} onChange= {(event) => setName(event.target.value)}></input>
             <br></br>
             <label id="artist">Artist's Name:</label>
-            <input type="text" className="bg-white p-2 border border-gray-300 rounded w-full" value={artist} onChange= {(event) => setArtist(event.target.value)}></input>
+            <input type="text" placeholder = "Artist Name" className="bg-white p-2 border border-gray-300 rounded w-full" value={artist} onChange= {(event) => setArtist(event.target.value)}></input>
             <br></br>
             <label id="url">Spotify URL:</label>
-            <input type="text" className="bg-white p-2 border border-gray-300 rounded w-full" value={url} onChange= {(event) => setUrl(event.target.value)}></input>
+            <input type="text" placeholder="Spotfiy URL" className="bg-white p-2 border border-gray-300 rounded w-full" value={url} onChange= {(event) => setUrl(event.target.value)}></input>
             <br></br>
             <button type="submit">Add Song</button>
         </form>
