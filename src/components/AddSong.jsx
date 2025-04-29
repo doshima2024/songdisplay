@@ -53,8 +53,5 @@ return(
     
 }
 
-// I'm going to need to write out methods and header sections before finishing my POST request call
-//I'm going to need to write a form in JSX that uses onChange to set the state for name, artist and url
-//I'm going to need to do somethinh (?) onSubmit for the form
 
 export default AddSong;
