@@ -91,7 +91,8 @@ def get_ratings():
 def create_a_rating(song_id):
     data = request.json
     try:
-        new_rating = Rating(rating=data["rating"], song_id=song_id)
+        rating_value = int(data["rating"])
+        new_rating = Rating(rating=rating_value, song_id=song_id)
         db.session.add(new_rating)
         db.session.commit()
         return jsonify(new_rating.to_dict()), 201
