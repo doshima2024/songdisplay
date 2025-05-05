@@ -20,6 +20,9 @@ def register_models():
 
 register_models()
 
+def handle_error(error):
+    return jsonify({"error": str(error)}), 500
+
 #Get and return all songs from the backend
 
 @app.get("/songs")
@@ -42,7 +45,7 @@ def add_song():
         db.session.commit()
         return jsonify(new_song.to_dict()), 201
     except Exception as exception:
-        return jsonify(str(exception)), 500
+        return handle_error(exception)
     
 # Delete a song from the database by ID (add more robust error handling, status codes)
 
@@ -56,7 +59,7 @@ def delete_song(id):
         db.session.commit()
         return jsonify({}), 204
     except Exception as exception:
-        return jsonify(str(exception)), 500
+        return handle_error(exception)
     
 # Update a song in Database
 
@@ -76,7 +79,7 @@ def update_song(id):
         db.session.commit()
         return jsonify(song.to_dict()), 200
     except Exception as exception:
-        return({"error": str(exception)}), 500
+        return handle_error(exception)
 
 @app.get("/ratings")
 def get_ratings():
@@ -93,7 +96,7 @@ def create_a_rating(song_id):
         db.session.commit()
         return jsonify(new_rating.to_dict()), 201
     except Exception as exception:
-        return jsonify({"error": str(exception)}), 500
+        return handle_error(exception)
 
 @app.delete("/ratings/<int:id>")
 def delete_rating(id):
@@ -103,8 +106,8 @@ def delete_rating(id):
             db.session.delete(rating)
             db.session.commit()
             return ({}), 204
-        except Exception as error:
-            return jsonify({"error": "error deleting rating"}), 500
+        except Exception as exception:
+            return handle_error(exception)
     else:
         return jsonify({"error": "no rating found with that id"}), 404
     
@@ -120,7 +123,7 @@ def update_a_rating(id):
         db.session.commit()
         return jsonify(existing_rating.to_dict()), 200
     except Exception as exception: 
-        return jsonify({"error": "failed to update the rating"}), 500
+        return handle_error(exception)
     
 if __name__ == "__main__":
     app.run(debug=True)
