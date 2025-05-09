@@ -37,6 +37,7 @@ def get_songs():
 
 @app.post("/song")
 def add_song():
+    #converting the JSON string sent by the frontend HTTP request into a Python dictionary:
     data = request.json
     try:
         new_song = (Song(name=data["name"], artist=data["artist"], url=data["url"]))
