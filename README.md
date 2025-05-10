@@ -1,6 +1,6 @@
 ## Song Display
 
-Song Display is a full-stack web app that displays Spotify songs using iframes. It also allows users to add and delete songs, and add ratings to songs, all via simple, styled UI. Songs and ratings are stored on the backend in a SQLite database. This project was built to practice and solidify my full stack development skills using the stack below, and to showcase my passion for music related technologies and tools.
+Song Display is a full-stack web app that displays Spotify songs using iframes. It also allows users to add and delete songs, and add ratings to songs, all via simple, styled UI. Songs and ratings are stored on the backend in a PostgreSQL database. This project was built to practice and solidify my full stack development skills using the stack below, and to showcase my passion for music related technologies and tools.
 
 ## Tech Stack
 - **Frontend** 
@@ -11,7 +11,7 @@ Song Display is a full-stack web app that displays Spotify songs using iframes. 
 - **Backend**
 - Python (Flask)
 - SQLAlchemy (ORM)
-- SQLite 
+- PostgreSQL
 
 ## Features
 
@@ -25,17 +25,32 @@ Song Display includes the following features:
 
 ## Getting Started
 
+### Prerequisites
+Before running the project locally, ensure you have the following installed:
+- Python 3.8+ - Backend development and running Flask
+- PostgreSQL 14+ - Database management and storage
+- Node.js and npm - Required for running Vite and managing frontend dependencies
+- pipenv - Virtual environment management for Python
+
 To run this project locally:
 
 ### Backend
-- Open a terminal window and run the following commands:
-- cd server 
+- 1. Open a terminal window and navigate to the server folder:
+- cd server
+- 2. Create a .env file in the root directory and add the following line, replacing with your actual PostgreSQL credentials for username and password:
+
+DATABASE_URL=postgresql://username:password@localhost:5432/songdisplaydb
+
+- 3. Run the following commands to set up the backend:
 - pipenv shell
 - pipenv install
+- flask db init
+- flask db migrate -m "Initial migration"
+- flask db upgrade
 - flask run
 
 ### Frontend
-- Open a second terminal window and run the following commands:
+- Open a second terminal window and navigate to the root folder, then run the following commands:
 - npm install
 - npm run dev
 
