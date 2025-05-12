@@ -56,6 +56,10 @@ DATABASE_URL=postgresql://username:password@localhost:5432/songdisplaydb
 
 Open the URL provided in the second terminal to view the app.
 
+### Demo
+
+Check out a live demo of the app here on Loom: [Watch The Demo](https://www.loom.com/share/da35c451fc7946dba929ef802b5eb2a4)
+
 ## Acknowledgements 
 
 Special thanks to my Flatiron School instructors and peers for their guidance and support throughout this project. It served as valuable practice, not only in solidifying my full stack skills — from writing models with SQLAlchemy and Python, creating backend routes with Flask, and managing state in React — but also in expanding my experience with PostgreSQL databases.
