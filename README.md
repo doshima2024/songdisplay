@@ -16,6 +16,14 @@ A new `authentication` branch is under active development to add user authentica
 - User login and session management
 - Protected routes for adding ratings
 
+## Branch Information
+
+The stable version (v1.0) without authentication features is available on the main branch:
+-git checkout main
+
+The in-progress version with user authentication features is being developed on the authentication branch:
+-git checkout authentication
+
 ## Tech Stack
 - **Frontend** 
 - React 
@@ -48,7 +56,7 @@ Before running the project locally, ensure you have the following installed:
 
 To run this project locally:
 
-### Backend
+### Backend Setup
 - 1. Open a terminal window and navigate to the server folder:
 - cd server
 - 2. Create a .env file in the root directory and add the following line, replacing with your actual PostgreSQL credentials for username and password:
@@ -63,7 +71,7 @@ DATABASE_URL=postgresql://username:password@localhost:5432/songdisplaydb
 - flask db upgrade
 - flask run
 
-### Frontend
+### Frontend Setup
 - Open a second terminal window and navigate to the root folder, then run the following commands:
 - npm install
 - npm run dev
