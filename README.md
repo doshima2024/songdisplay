@@ -1,6 +1,20 @@
-## Song Display
+## Song Display and Rating App
 
 Song Display is a full-stack web app that displays Spotify songs using iframes. It also allows users to add and delete songs, and add ratings to songs, all via simple, styled UI. Songs and ratings are stored on the backend in a PostgreSQL database. This project was built to practice and solidify my full stack development skills using the stack below, and to showcase my passion for music related technologies and tools.
+
+## Current Version (v1.0)
+
+The current stable version of the app includes the following features:
+- Add and display songs using Spotify embeds
+- Rate songs
+- Store data in a PostgreSQL database
+
+## In Progress: User Authentication Feature
+
+A new `authentication` branch is under active development to add user authentication to the app, including:
+- User registration with hashed passwords
+- User login and session management
+- Protected routes for adding ratings
 
 ## Tech Stack
 - **Frontend** 
