@@ -1,6 +1,10 @@
 from server.app import db
 from flask import jsonify
 from sqlalchemy.orm import validates
+from sqlalchemy_serializer import SerializerMixin
+from flask_bcrypt import Bcrypt 
+
+bcrypt = Bcrypt()
 
 class Song(db.Model):
 
@@ -66,3 +70,31 @@ class Rating(db.Model):
         if value < 0 or value > 10:
             raise ValueError("Rating must be between zero and ten")
         return value
+    
+class User(db.Model, SerializerMixin):
+
+    __tablename__ = "users"
+
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String, unique=True, nullable=False)
+    password_hash = db.Column(db.String, nullable=False)
+
+        # Exclude the password hash from serialization to prevent exposing it in API responses.
+    serialize_rules = ("-password_hash",)
+
+        # For the @property "getter", we make the password "un-gettable" by raising an exception when the 
+        #getter is called, thus preventing access to the raw password.
+    @property
+    def password(self):
+        raise Exception("The password is secret and cannot be accessed directly")
+        
+
+        # For the setter, we use bcrypt to hash the password value, turn it into a UTF-8 string, and set
+        # it to the instance attribute "password_hash".
+    @password.setter
+    def password(self, value):
+        self.password_hash = bcrypt.generate_password_hash(value).decode("utf-8")
+
+        # Returns True if a given password matches the instance's "password_hash".
+    def authenticate(self, password):
+        return bcrypt.check_password_hash(self.password_hash, password)
