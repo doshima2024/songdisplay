@@ -1,6 +1,12 @@
 from server.app import db
 from flask import jsonify
 from sqlalchemy.orm import validates
+from sqlalchemy_serializer import SerializerMixin
+from flask_bcrypt import Bcrypt 
+
+bcrypt = Bcrypt()
+
+# One to many relationship between Song and Rating; a song can have many ratings, but a rating only has one song.
 
 class Song(db.Model):
 
@@ -43,6 +49,8 @@ class Song(db.Model):
             raise ValueError("URL must not be empty")
         return value
 
+# One to many relationship between Rating and User; a user can have many ratings, but a rating has just one user.
+
 class Rating(db.Model):
 
     __tablename__ = "ratings"
@@ -50,14 +58,16 @@ class Rating(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     rating = db.Column(db.Integer, nullable=False)
     song_id = db.Column(db.Integer, db.ForeignKey("songs.id"), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
 
     song = db.relationship("Song", back_populates="ratings")
+    user = db.relationship("User", back_populates="ratings")
     
     def __repr__(self):
         return f'Song with ID: {self.song_id} has a rating of {self.rating}'
     
     def to_dict(self):
-        return {"id": self.id, "rating": self.rating, "song_id": self.song_id}
+        return {"id": self.id, "rating": self.rating, "song_id": self.song_id, "user_id": self.user_id, "username": self.user.username}
     
     @validates("rating")
     def validate_rating(self, key, value):
@@ -66,3 +76,33 @@ class Rating(db.Model):
         if value < 0 or value > 10:
             raise ValueError("Rating must be between zero and ten")
         return value
+    
+class User(db.Model, SerializerMixin):
+
+    __tablename__ = "users"
+
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String, unique=True, nullable=False)
+    password_hash = db.Column(db.String, nullable=False)
+
+        # Exclude the password hash from serialization to prevent exposing it in API responses.
+    serialize_rules = ("-password_hash",)
+
+    ratings = db.relationship("Rating", back_populates="user", cascade="all, delete")
+
+        # For the @property "getter", we make the password "un-gettable" by raising an exception when the 
+        #getter is called, thus preventing access to the raw password.
+    @property
+    def password(self):
+        raise Exception("The password is secret and cannot be accessed directly")
+        
+
+        # For the setter, we use bcrypt to hash the password value, turn it into a UTF-8 string, and set
+        # it to the instance attribute "password_hash".
+    @password.setter
+    def password(self, value):
+        self.password_hash = bcrypt.generate_password_hash(value).decode("utf-8")
+
+        # Returns True if a given password matches the instance's "password_hash".
+    def authenticate(self, password):
+        return bcrypt.check_password_hash(self.password_hash, password)
