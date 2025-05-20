@@ -1,10 +1,12 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_cors import CORS
 import os
 from dotenv import load_dotenv
-
+from server.models import User
+from flask_bcrypt import Bcrypt
+from sqlalchemy.exc import IntegrityError
 
 
 app = Flask(__name__)
@@ -132,6 +134,38 @@ def update_a_rating(id):
         return jsonify(existing_rating.to_dict()), 200
     except Exception as exception: 
         return handle_error(exception)
+    
+@app.post("/register")
+def register_a_user():
+    data = request.json
+    username = data.get("username")
+    password = data.get("password")
+
+    if not username or not password:
+        return jsonify({"error": "Username and password are required"}), 400
+    
+    try:
+        if User.query.filter_by(username=username).first():
+            return jsonify({"error": "That username already exists, please try another."}), 409
+    
+        new_user = User(username = username)
+        # After creating a new object of the User class, we then call the custom property setter to hash the password
+        # of the newly created object.
+        new_user.password = password
+
+        db.session.add(new_user)
+        db.session.commit()
+
+        return jsonify(new_user.to_dict()), 201
+    
+    except IntegrityError:
+        db.session.rollback()
+        return jsonify({"error": "Username must be unique"}), 409
+    except Exception as exception:
+        db.session.rollback()
+        return jsonify({"error": str(exception)}), 500
+
+
     
 if __name__ == "__main__":
     app.run(debug=True)
