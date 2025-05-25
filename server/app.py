@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from server.models import User
 from flask_bcrypt import Bcrypt
 from sqlalchemy.exc import IntegrityError
+from server.models import authenticate
 
 
 app = Flask(__name__)
@@ -164,6 +165,19 @@ def register_a_user():
     except Exception as exception:
         db.session.rollback()
         return jsonify({"error": str(exception)}), 500
+
+@app.post("/login")
+def user_login():
+    data = request.json
+    username = data.get("username")
+    password = data.get("password")
+    user = User.query.filter_by(username=username).first()
+
+    if user and user.authenticate(password):
+        session["user_id"] = user.id
+        return jsonify(user.to_dict()), 200
+    else:
+        return jsonify({"error": "Invalid username or password"}), 401
 
 
     
